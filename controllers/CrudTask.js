@@ -1,4 +1,5 @@
 
+
 import Task from "../models/Task.js";
 // const CreateTask = async (req, res) => {
 //   try {
@@ -36,18 +37,18 @@ const getAllTasks = async (req, res) => {
 };
 
 
-// const deleteTaskById = async (req, res) => {
-//   try {
-//     const task = await Task.findByIdAndDelete(req.params.id);
-//     if (!task) {
-//       return res.status(404).json({ message: "Task not found" });
-//     }
-//     res.status(201).json({ message: "Task deleted successfully" });
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json({ message: "Server Error" });
-//   }
-// };
+const deleteTaskById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const task = await Task.findByIdAndDelete(id);
+    if (!task) {
+      return res.status(404).send({ error: 'Task not found' });
+    }
+    res.send({ message: 'Task deleted successfully' });
+  } catch (error) {
+    res.status(500).send({ error: 'Internal server error' });
+  }
+};
 
 // const updateTaskById = async (req, res) => {
 //   try {
@@ -67,4 +68,7 @@ const getAllTasks = async (req, res) => {
 // };
 
 
-export default getAllTasks;
+export {
+  getAllTasks,
+  deleteTaskById,
+};

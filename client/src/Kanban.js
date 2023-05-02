@@ -65,6 +65,15 @@ class Kanban extends React.Component {
     });
     this.setState({ tasks: newTasks });
   };
+  onDelete = async id => {
+    try {
+      await axios.delete(`http://localhost:5000/tasks/${id}`);
+      const newTasks = this.state.tasks.filter(task => task._id !== id);
+      this.setState({ tasks: newTasks });
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   render() {
     const { tasks, channels } = this.state;
@@ -85,7 +94,7 @@ class Kanban extends React.Component {
                   {tasks
                     .filter(item => item.status === channel)
                     .map(item => (
-                      <KanbanItem id={item._id} onDrop={this.update}>
+                      <KanbanItem id={item._id} onDrop={this.update} onDelete={this.onDelete}>
                         <div style={classes.item}>{item.title}</div>
                       </KanbanItem>
                     ))}
@@ -141,7 +150,12 @@ const boxSource = {
 
 class KanbanItem extends React.Component {
   render() {
-    return this.props.connectDragSource(<div>{this.props.children}</div>);
+    return (
+      <div>
+        {this.props.connectDragSource(<div>{this.props.children}</div>)}
+        <button onClick={() => this.props.onDelete(this.props.id)}>Delete</button>
+      </div>
+    );
   }
 }
 
