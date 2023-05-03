@@ -99,6 +99,21 @@ class Kanban extends React.Component {
       console.error(error);
     }
   };
+  handleAddChannel = async () => {
+  const channelName = prompt("Enter channel name");
+  if (channelName) {
+    try {
+      await axios.post("http://localhost:5000/channels/create", {
+        name: channelName
+      });
+      const newChannels = [...this.state.channels, channelName];
+      this.setState({ channels: newChannels });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+};
+
 
   render() {
     const { tasks, channels, showForm, title, status } = this.state;
@@ -112,6 +127,8 @@ class Kanban extends React.Component {
         <header>
           Kanban Board{" "}
           <button onClick={this.toggleForm}>{showForm ? "Hide Form" : "New Task"}</button>
+                  <button onClick={this.handleAddChannel}>New Channel</button> {/* add new button */}
+
         </header>
         {showForm && ( // render form only when showForm is true
           <form onSubmit={this.handleSubmit}>

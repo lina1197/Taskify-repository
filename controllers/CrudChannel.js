@@ -1,16 +1,16 @@
 import Channel from "../models/Channel.js";
-// const CreateChannel = async (req, res) => {
-//   try {
-//     const channel = new Channel(req.body);
-//     const savedChannel = await channel.save();
-//     res.status(201).json(savedChannel);
-//   } catch (err) {
-//     res.status(400).json({
-//       error: err.message,
-//       savedChannel: req.body 
-//     });
-//   }
-// };
+const CreateChannel = async (req, res) => {
+  try {
+    const channel = new Channel(req.body);
+    const savedChannel = await channel.save();
+    res.status(201).json(savedChannel);
+  } catch (err) {
+    res.status(400).json({
+      error: err.message,
+      savedChannel: req.body 
+    });
+  }
+};
 
 // const getChannelById = async (req, res) => {
 //   try {
@@ -63,4 +63,4 @@ const getAllChannels = async (req, res) => {
     res.status(500).json({ message: "Server Error" });
   }
 };
-export default getAllChannels;
+export  {CreateChannel,getAllChannels};
