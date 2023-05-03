@@ -252,6 +252,7 @@ handleTitleChange = e => {
             <input type="text" placeholder="status" value={status} onChange={this.handleStatusChange} />
              
              <select value={priority} onChange={this.handlePriorityChange}>
+               <option value="" disabled selected hidden>Select task priority</option>
     <option value="low">Low</option>
     <option value="medium">Medium</option>
     <option value="high">High</option>

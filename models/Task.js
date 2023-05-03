@@ -6,8 +6,8 @@ const taskSchema = new mongoose.Schema({
   status: String,
   priority:{
     type: String,
-    enum: ['low', 'medium','high'],
-    default : 'low'}
+    enum: [null,'low', 'medium','high'],
+    default : null}
 });
 
 const Task = mongoose.model('Task', taskSchema);
