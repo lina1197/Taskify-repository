@@ -38,9 +38,34 @@ class Kanban extends React.Component {
     super(props);
     this.state = {
       tasks: [],
-      channels: []
+      channels: [],
+       showForm: false, // new state property
+      title: "", // new state property
+      status: "" // new state property
     };
   }
+  toggleForm = () => {
+    this.setState({ showForm: !this.state.showForm });
+  };
+
+  handleSubmit = async e => {
+    e.preventDefault();
+    const { title, status } = this.state;
+    if (title.trim() && status.trim()) {
+      try {
+        const response = await axios.post("http://localhost:5000/tasks/create", {
+          title,
+          status
+        });
+        const newTask = response.data;
+        const newTasks = [...this.state.tasks, newTask];
+        this.setState({ tasks: newTasks, title: "", status: "", showForm: false });
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
+
 
   async componentDidMount() {
     try {
@@ -76,7 +101,7 @@ class Kanban extends React.Component {
   };
 
   render() {
-    const { tasks, channels } = this.state;
+    const { tasks, channels, showForm, title, status } = this.state;
     const labelsMap = channels.reduce((map, channel) => {
       map[channel] = channel.charAt(0).toUpperCase() + channel.slice(1);
       return map;
@@ -84,7 +109,27 @@ class Kanban extends React.Component {
 
     return (
       <main>
-        <header> Kanban Board </header>
+        <header>
+          Kanban Board{" "}
+          <button onClick={this.toggleForm}>{showForm ? "Hide Form" : "New Task"}</button>
+        </header>
+        {showForm && ( // render form only when showForm is true
+          <form onSubmit={this.handleSubmit}>
+            <input
+              type="text"
+              placeholder="Title"
+              value={title}
+              onChange={e => this.setState({ title: e.target.value })}
+            />
+            <input
+              type="text"
+              placeholder="Status"
+              value={status}
+              onChange={e => this.setState({ status: e.target.value })}
+            />
+            <button type="submit">Add Task</button>
+          </form>
+        )}
         <section style={classes.board}>
           {channels.map(channel => (
             <KanbanColumn status={channel}>

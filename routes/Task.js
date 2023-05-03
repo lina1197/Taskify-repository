@@ -2,8 +2,8 @@ import express from 'express';
 
 
 const TaskRouter = express.Router();
-import { getAllTasks,deleteTaskById } from '../controllers/CrudTask.js';
-// TaskRouter.post('/create', CreateTask);
+import { getAllTasks,deleteTaskById,CreateTask } from '../controllers/CrudTask.js';
+TaskRouter.post('/create', CreateTask);
 TaskRouter.delete('/:id',deleteTaskById )
 // TaskRouter.get('/:id', getTaskById);
 // TaskRouter.get('/getAll', getAllTasks);

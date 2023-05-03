@@ -1,18 +1,18 @@
 
 
 import Task from "../models/Task.js";
-// const CreateTask = async (req, res) => {
-//   try {
-//     const task = new Task(req.body);
-//     const savedTask = await task.save();
-//     res.status(201).json(savedTask);
-//   } catch (err) {
-//     res.status(400).json({
-//       error: err.message,
-//       savedTask: req.body 
-//     });
-//   }
-// };
+const CreateTask = async (req, res) => {
+  try {
+    const task = new Task(req.body);
+    const savedTask = await task.save();
+    res.status(201).json(savedTask);
+  } catch (err) {
+    res.status(400).json({
+      error: err.message,
+      savedTask: req.body 
+    });
+  }
+};
 
 // const getTaskById = async (req, res) => {
 //   try {
@@ -71,4 +71,5 @@ const deleteTaskById = async (req, res) => {
 export {
   getAllTasks,
   deleteTaskById,
+  CreateTask
 };
