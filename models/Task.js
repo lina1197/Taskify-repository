@@ -4,6 +4,10 @@ import mongoose from 'mongoose';
 const taskSchema = new mongoose.Schema({
   title: String,
   status: String,
+  priority:{
+    type: String,
+    enum: ['low', 'medium','high'],
+    default : 'low'}
 });
 
 const Task = mongoose.model('Task', taskSchema);

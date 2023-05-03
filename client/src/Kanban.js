@@ -194,11 +194,82 @@ const boxSource = {
 };
 
 class KanbanItem extends React.Component {
+   constructor(props) {
+    super(props);
+    this.state = {
+      isEditing: false,
+      title: props.children.props.children,
+      status: props.status,
+      priority:props.priority,
+    };
+  }
+handleTitleChange = e => {
+    this.setState({ title: e.target.value });
+  };
+
+  handleStatusChange = e => {
+    this.setState({ status: e.target.value });
+  };
+  handlePriorityChange = e => {
+    this.setState({ priority: e.target.value });
+  };
+
+  handleEditClick = () => {
+    this.setState({ isEditing: true });
+  };
+
+  handleCancelClick = () => {
+    this.setState({ isEditing: false });
+  };
+
+  handleSubmit = async e => {
+    e.preventDefault();
+    const { id, onDrop } = this.props;
+    const { title, status,priority } = this.state;
+    if (title.trim() && status.trim() && priority.trim()) {
+      try {
+        await axios.put(`http://localhost:5000/tasks/${id}`, { title, status,priority });
+        onDrop(id, status);
+        this.setState({ isEditing: false });
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
   render() {
-    return (
-      <div>
-        {this.props.connectDragSource(<div>{this.props.children}</div>)}
-        <button onClick={() => this.props.onDelete(this.props.id)}>Delete</button>
+    const { connectDragSource, onDelete } = this.props;
+    const { isEditing, title, status,priority } = this.state;
+    const itemStyle = {
+      ...classes.item,
+      opacity: isEditing ? 0.5 : 1,
+      backgroundColor: isEditing ? "#EEE" : "white"
+    };
+    return connectDragSource(
+      <div style={itemStyle}>
+        {isEditing ? (
+          <form onSubmit={this.handleSubmit}>
+            <input type="text" value={title} onChange={this.handleTitleChange} />
+            <input type="text" placeholder="status" value={status} onChange={this.handleStatusChange} />
+             
+             <select value={priority} onChange={this.handlePriorityChange}>
+    <option value="low">Low</option>
+    <option value="medium">Medium</option>
+    <option value="high">High</option>
+  </select>
+            <button type="submit">Save</button>
+            <button type="button" onClick={this.handleCancelClick}>
+              Cancel
+            </button>
+          </form>
+        ) : (
+          <>
+            <div>{title}</div>
+            <div>{status}</div>
+            <div>{priority}</div>
+            <button onClick={this.handleEditClick}>Edit</button>
+            <button onClick={() => onDelete(this.props.id)}>Delete</button>
+          </>
+        )}
       </div>
     );
   }
