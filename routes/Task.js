@@ -6,8 +6,7 @@ import { getAllTasks,deleteTaskById,CreateTask,updateTaskById } from '../control
 TaskRouter.post('/create', CreateTask);
 TaskRouter.delete('/:id',deleteTaskById )
 // TaskRouter.get('/:id', getTaskById);
-// TaskRouter.get('/getAll', getAllTasks);
-
+// TaskRouter.get('/:priority',filterTaskByPriority);
 TaskRouter.put('/:id', updateTaskById);
 
 TaskRouter.get('/getAll', getAllTasks);

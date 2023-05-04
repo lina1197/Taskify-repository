@@ -68,11 +68,21 @@ const updateTaskById = async (req, res) => {
     res.status(500).json({ message: "Server Error" });
   }
 };
+// const filterTaskByPriority = async (req, res) => {
+//   const priority = req.params.priority;
+//   try {
+//     const tasks = await Task.filterByPriority(priority);
+//     res.json(tasks);
+//   } catch (err) {
+//     res.status(500).json({ message: err.message });
+//   }
+// }
 
 
 export {
   getAllTasks,
   deleteTaskById,
   CreateTask,
-  updateTaskById
+  updateTaskById,
+
 };

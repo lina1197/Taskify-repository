@@ -8,7 +8,7 @@ const classes = {
   board: {
     display: "flex",
     margin: "0 auto",
-    width: "90vw",
+    width: "100%",
     fontFamily: 'Arial, "Helvetica Neue", sans-serif'
   },
   column: {
@@ -16,20 +16,47 @@ const classes = {
     width: "18vw",
     height: "80vh",
     margin: "0 auto",
-    backgroundColor: "#FCC8B2"
+    backgroundColor: "#B8A6CB"
   },
   columnHead: {
     textAlign: "center",
     padding: 10,
     fontSize: "1.2em",
-    backgroundColor: "#C6D8AF"
+    backgroundColor: "#E1E6E1"
   },
   item: {
     padding: 10,
     margin: 10,
     fontSize: "0.8em",
     cursor: "pointer",
-    backgroundColor: "white"
+    backgroundColor: "white",
+    borderRadius:"15px",
+  },
+  button: {
+    backgroundColor: "#4CAF50",
+    border: "none",
+    color: "white",
+    padding: "10px 20px",
+    textAlign: "center",
+    textDecoration: "none",
+    display: "inline-block",
+    fontSize: "16px",
+    margin: "4px 2px",
+    cursor: "pointer",
+    borderRadius: "5px"
+  },
+  button2: {
+    backgroundColor: "#4CAF50",
+    border: "none",
+    color: "white",
+    padding: "5px 10px",
+    textAlign: "center",
+    textDecoration: "none",
+    display: "inline-block",
+    fontSize: "12px",
+    margin: "4px 2px",
+    cursor: "pointer",
+    borderRadius: "5px"
   }
 };
 
@@ -139,9 +166,9 @@ handleDeleteChannel = async (name) => {
     return (
       <main>
         <header>
-          Kanban Board{" "}
-          <button onClick={this.toggleForm}>{showForm ? "Hide Form" : "New Task"}</button>
-                  <button onClick={this.handleAddChannel}>New Channel</button> {/* add new button */}
+          {/* Kanban Board{" "} */}
+          <button style={classes.button} onClick={this.toggleForm}>{showForm ? "Hide Form" : "New Task"}</button>
+                  <button style={classes.button} onClick={this.handleAddChannel}>New Channel</button> {/* add new button */}
  
         </header>
         {showForm && ( // render form only when showForm is true
@@ -158,14 +185,14 @@ handleDeleteChannel = async (name) => {
               value={status}
               onChange={e => this.setState({ status: e.target.value })}
             />
-            <button type="submit">Add Task</button>
+            <button  type="submit">Add Task</button>
           </form>
         )}
         <section style={classes.board}>
           {channels.map(channel => (
             <KanbanColumn status={channel}>
               <div style={classes.column}>
-                <div style={classes.columnHead}>{labelsMap[channel]}                <button onClick={() => this.handleDeleteChannel(channel)}>Delete</button>
+                <div style={classes.columnHead}>{labelsMap[channel]}                <button style={classes.button} onClick={() => this.handleDeleteChannel(channel)}>Delete</button>
  </div>
                 <div>
                   {tasks
@@ -299,8 +326,8 @@ handleTitleChange = e => {
             <div>{title}</div>
             <div>{status}</div>
             <div>{priority}</div>
-            <button onClick={this.handleEditClick}>Edit</button>
-            <button onClick={() => onDelete(this.props.id)}>Delete</button>
+            <button style={classes.button2} onClick={this.handleEditClick}>Edit</button>
+            <button style={classes.button2} onClick={() => onDelete(this.props.id)}>Delete</button>
           </>
         )}
       </div>

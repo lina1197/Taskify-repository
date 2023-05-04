@@ -64,4 +64,13 @@ const getAllChannels = async (req, res) => {
     res.status(500).json({ message: "Server Error" });
   }
 };
+// const filterChannelByName = async (req, res) => {
+//   const name = req.params.name;
+//   try {
+//     const channel = await Channel.filterByCategory(name);
+//     res.json(channel);
+//   } catch (err) {
+//     res.status(500).json({ message: err.message });
+//   }
+// }
 export  {CreateChannel,getAllChannels,deleteChannelById};

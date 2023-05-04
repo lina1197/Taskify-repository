@@ -7,8 +7,14 @@ const taskSchema = new mongoose.Schema({
   priority:{
     type: String,
     enum: [null,'low', 'medium','high'],
-    default : null}
+    default : null},
+ 
 });
+// taskSchema.statics.filterByPriority = async function(priority) {
+//   const tasks = await this.find({ priority: priority });
+//   return tasks;
+// };
+
 
 const Task = mongoose.model('Task', taskSchema);
 
