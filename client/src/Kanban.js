@@ -73,6 +73,8 @@ class Kanban extends React.Component {
       const channelsResponse = await axios.get('http://localhost:5000/channels/getAll');
       const tasks = tasksResponse.data;
       const channels = channelsResponse.data.map(channel => channel.name);
+         
+
 
       this.setState({ tasks, channels });
     } catch (error) {
@@ -113,6 +115,18 @@ class Kanban extends React.Component {
     }
   }
 };
+handleDeleteChannel = async (name) => {
+  try {
+    await axios.delete(`http://localhost:5000/channels/${name}`);
+    const newChannels = this.state.channels.filter(channel => channel !== name);
+    this.setState({ channels: newChannels });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+
+
 
 
   render() {
@@ -128,7 +142,7 @@ class Kanban extends React.Component {
           Kanban Board{" "}
           <button onClick={this.toggleForm}>{showForm ? "Hide Form" : "New Task"}</button>
                   <button onClick={this.handleAddChannel}>New Channel</button> {/* add new button */}
-
+ 
         </header>
         {showForm && ( // render form only when showForm is true
           <form onSubmit={this.handleSubmit}>
@@ -151,7 +165,8 @@ class Kanban extends React.Component {
           {channels.map(channel => (
             <KanbanColumn status={channel}>
               <div style={classes.column}>
-                <div style={classes.columnHead}>{labelsMap[channel]}</div>
+                <div style={classes.columnHead}>{labelsMap[channel]}                <button onClick={() => this.handleDeleteChannel(channel)}>Delete</button>
+ </div>
                 <div>
                   {tasks
                     .filter(item => item.status === channel)

@@ -1,8 +1,7 @@
 
 import express from 'express';
 import cors from 'cors';
-// import TaskRouter from './routes/Task.js';
-// import ProjectRouter from './routes/Project.js';
+
 import bodyParser from 'body-parser';
 import User from './models/User.js';
 
